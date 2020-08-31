@@ -21,7 +21,7 @@ public class Test {
             switch (o) {
                 case 1:
                     System.out.println(
-                            "Cadastrar conta ? (digite 'y' para abrir  uma conta ou uma poupança 'n' para cancelar)");
+                            "Cadastrar(digite 'y' para abrir uma conta ou poupança;\nDigite 'n' para cancelar)");
                     char escolha_da_conta = scan.next().charAt(0);
 
                     switch (escolha_da_conta) {
@@ -44,7 +44,7 @@ public class Test {
                                 Banco banco = new Banco(numero_agencia, nome_da_agencia);
                                 Cliente c = new Cliente(nome, cpf);
 
-                                System.out.println("Deseja fazer poupança ? (1 SIM)- (2 NÃO)");
+                                System.out.println("Deseja fazer poupança ? (1 SIM)- (2 NÃO - apenas abre uma conta)");
                                 int decidir_conta = scan.nextInt();
 
                                 if (decidir_conta == 1) {
@@ -76,7 +76,7 @@ public class Test {
 
                         }
                     }
-                    for(Poupanca poupanca3 : poupanca){
+                    for (Poupanca poupanca3 : poupanca) {
                         if (poupanca3.getCliente().getCpf().equals(cpf_teste)) {
                             System.out.println("Digite o valor: ");
                             double deposito2 = scan.nextDouble();
@@ -89,13 +89,17 @@ public class Test {
 
                 case 3:
                     System.out.println("Render juros(Apenas para poupanças)");
+                    System.out.println("Digite o Cpf: ");
+                    String cpf3 = scan.next();
                     for (Poupanca poupanca3 : poupanca) {
-                        if (poupanca3.getSaldo() == 0) {
-                            System.out.println("Você não possui conta poupança");
-                        } else {
+                        if (poupanca3.getCliente().getCpf().equals(cpf3)) {
                             poupanca3.Render_juros();
                             System.out.println("Saldo atual:" + poupanca3.getSaldo());
-                            System.out.println("Total de contas poupanças:" + poupanca.size());
+                            break;
+
+                        } else if (poupanca3.getCliente().getCpf() == null) {
+                            System.out.println("Cliente não cadastrado. ");
+
                         }
 
                     }
@@ -114,17 +118,17 @@ public class Test {
                         } else {
                             System.out.println("Sem info na conta");
                         }
-                        for (Poupanca poupanca4 : poupanca) {
 
-                            if (poupanca4.getCliente().getNome().equals(nome2)
-                                    & poupanca4.getCliente().getCpf().equals(cpf4)) {
-                                System.out.println("Número Agência poupança: " + poupanca4.getBanco().getNum_agencia());
-                                System.out.println("Nome agência poupança: " + poupanca4.getBanco().getNome_agencia());
+                    }
+                    for (Poupanca poupanca4 : poupanca) {
 
-                            } else {
-                                System.out.println("Sem info na poupança");
-                            }
+                        if (poupanca4.getCliente().getNome().equals(nome2)
+                                & poupanca4.getCliente().getCpf().equals(cpf4)) {
+                            System.out.println("Número Agência poupança: " + poupanca4.getBanco().getNum_agencia());
+                            System.out.println("Nome agência poupança: " + poupanca4.getBanco().getNome_agencia());
 
+                        } else {
+                            System.out.println("Sem info na poupança");
                         }
 
                     }
@@ -150,15 +154,34 @@ public class Test {
                         }
 
                     }
+                    for (Poupanca p5 : poupanca) {
+                        if (p5.getCliente().getNome().equals(nome5)) {
+                            System.out.println("Digite o nome da agência: ");
+                            String nome_agencia = scan.next();
+                            System.out.println("Digite o número da agência: ");
+                            String nume_agencia = scan.next();
+                            p5.getBanco().setNUm_agencia(nume_agencia);
+                            p5.getBanco().setNome_agencia(nome_agencia);
+                            System.out.println("Alteração realizada com sucesso!");
+                            break;
+                        } else {
+                            System.out.println("Operação inválida");
+                            break;
+
+                        }
+
+                    }
+
 
                     break;
                 case 0:
 
                     System.out.println("Saiu");
                     yes = false;
+                    break;
 
                 default:
-                    System.out.println("Operação inválida!");
+                    System.out.println("");
                     yes = false;
             }
         }
